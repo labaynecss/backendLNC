@@ -7,7 +7,7 @@ const path = require('path');
 
 //routes
 const userRoutes = require('./routes/userRoutes');
-const categoryRoutes = require('/routes/categoryRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 const productRoutes = require('./routes/productRoutes');
 const paymentRoutes = require('./routes/payment');
 const orderRoutes = require('./routes/orderRoutes');
@@ -15,6 +15,7 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const { PORT } = require('./config/envConfig');
 const port = process.env.PORT || 5000;
 console.log(env);
+
 //stripe api webhooks
 app.post(
   '/api/webhook',
