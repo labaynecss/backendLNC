@@ -73,7 +73,7 @@ class PaymentController {
 
       customer: customer.id,
       mode: 'payment',
-      success_url: `${process.env.CLIENT}/users?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.CLIENT}/user?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT}/cart`,
     });
     res.json({ url: session.url });
@@ -104,7 +104,6 @@ class PaymentController {
       case 'checkout.session.completed':
         const data = event.data.object;
         let customer = await stripe.customers.retrieve(data.customer);
-        console.log('customer', customer);
         customer = JSON.parse(customer?.metadata?.cart);
         customer.forEach(async (ctr) => {
           try {
@@ -122,7 +121,6 @@ class PaymentController {
               productId: ctr._id,
               userId: ctr.userId,
               size: ctr.size,
-              motor: ctr.motor,
               color: ctr.color,
               quantities: ctr.quantity,
               address: data.customer_details.address,

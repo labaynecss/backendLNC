@@ -43,7 +43,3 @@ app.use('/api', productRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', reviewRoutes);
-
-app.get('/favicon.ico', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
-});
