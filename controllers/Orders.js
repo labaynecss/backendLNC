@@ -13,7 +13,7 @@ class Orders {
       const response = await OrderModel.find(option)
         .populate(
           'productId',
-          '-colors -sizes -motors -createdAt -updatedAt -stock -image2 -image3',
+          '-color -motor -size -createdAt -updatedAt -stock -image2 -image3',
         )
         .populate('userId', '-password -updatedAt -createdAt -admin')
         .skip(skip)
@@ -31,7 +31,7 @@ class Orders {
       const details = await OrderModel.findOne({ _id: id })
         .populate(
           'productId',
-          '-colors -sizes -motors -createdAt -updatedAt -stock -image2 -image3',
+          '-color -motor -size -createdAt -updatedAt -stock -image2 -image3',
         )
         .populate('userId', '-password -updatedAt -createdAt -admin');
       return res.status(200).json({ details });
@@ -80,12 +80,21 @@ class Orders {
           { _id: product },
           { $push: { reviews: createdReview._id } },
         );
-        return res.status(200).json({ msg: 'review has created successfully' });
+        return res.status(201).json({ msg: 'review has created successfully' });
       } catch (error) {
         return res.status(500).json({ errors: error.message });
       }
     } else {
       return res.status(400).json({ errors: errors.array() });
+    }
+  }
+  async getAllOrders(req, res) {
+    try {
+      const orders = await OrderModel.find();
+      res.status(200).json({ orders });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
     }
   }
 }
